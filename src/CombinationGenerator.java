@@ -18,10 +18,10 @@ public class CombinationGenerator {
     }
 
     /*
-    Returns the next combination of players to be checked.  Calling this method repeatedly with @param currentCombination
-    initialized to {0,1,2,...} will return all possible arrays with unique values under numOfPlayers exactly once, one
-    per call, and will return null when a new combination cannot be made.  Synchronized so that multiple TeamAnalyzers
-    can take different subsets of the total possible player combinations and analyze them simultaneously.
+    Returns the next combination of players to be checked.  Calling this method repeatedly will return all possible arrays with unique values
+    under currentState.length-1 exactly once, one per call, and will return null when a new combination cannot be made.  Synchronized so that multiple TeamAnalyzers
+    can take different subsets of the total possible player combinations and analyze them simultaneously.  Mapping the result of all
+    calls to this method to the indexes in the Player database represents all possible teams that could be made up up those players.
      */
     public synchronized int[] getNextCombination() {
         //If this is the first call to this object, return the initial settings of currentState
