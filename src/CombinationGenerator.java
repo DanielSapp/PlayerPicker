@@ -14,17 +14,16 @@ public class CombinationGenerator {
         for (int i = 0; i < playersOnTeam; i++) {
             currentState[i] = i;
         }
-
         this.totalPlayers = totalPlayers;
     }
 
     /*
-    Given a int[] representing a combination of players and the number of total players that are being considered,
-    returns the next combination of players to be checked.  Calling this method repeatedly with @param currentCombination
+    Returns the next combination of players to be checked.  Calling this method repeatedly with @param currentCombination
     initialized to {0,1,2,...} will return all possible arrays with unique values under numOfPlayers exactly once, one
-    per call, and will return null when a new combination cannot be made.
+    per call, and will return null when a new combination cannot be made.  Synchronized so that multiple TeamAnalyzers
+    can take different subsets of the total possible player combinations and analyze them simultaneously.
      */
-    public int[] getNextCombination() {
+    public synchronized int[] getNextCombination() {
         //If this is the first call to this object, return the initial settings of currentState
         if (firstCall) {
             firstCall = false;
@@ -36,8 +35,10 @@ public class CombinationGenerator {
         while (indexBeingChecked != -1 && currentState[indexBeingChecked] == totalPlayers-currentState.length+indexBeingChecked) {
             indexBeingChecked--;
         }
+
         //If no index can be incremented (all combinations have been exhausted), return null
         if (indexBeingChecked == -1) {return null;}
+
         //Increment the index
         currentState[indexBeingChecked]++;
 
@@ -48,5 +49,9 @@ public class CombinationGenerator {
             indexBeingChecked++;
         }
         return currentState;
+    }
+
+    public int getNumberOfPlayersOnTeam() {
+        return currentState.length;
     }
 }
