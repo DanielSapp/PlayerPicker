@@ -7,8 +7,9 @@ public class Main {
         int maxCost = ui.getMaxCost();
         int numOfPlayersOnTeam = ui.getNumOfPlayersOnTeam();
         int numOfThreads = ui.getNumberOfThreads();
-        PlayerDatabase pdb = new PlayerDatabase(ui.getPlayerArray());
+        PlayerDatabase pdb = new PlayerDatabase(ui.getPlayerArray(numOfPlayersOnTeam));
         pdb.cleanPlayerData(numOfPlayersOnTeam);
+
         System.out.println("The best combination of players is:");
         for (Player p : getBestCombination(pdb, maxCost, numOfPlayersOnTeam, numOfThreads)) {
             System.out.println(p.name);

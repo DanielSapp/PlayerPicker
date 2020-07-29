@@ -4,7 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-//A class that abstracts away all command-line user interaction
+//A class that abstracts away all command-line user interaction.  Each method prompts the user
+//for a parameter that is needed for the program, validates it, and returns it.
 public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
 
@@ -61,11 +62,15 @@ public class UserInterface {
         }
     }
 
-    //Call getPlayerStringArray() to get a String[] representing the data in the CSV file.  Return a Player[]
-    //created out of this data
-    public Player[] getPlayerArray() {
+    //Call getPlayerStringArray() to get a String[] representing the data in the CSV file.
+    //Exit if there are fewer players than the declared team size. Return a Player[] created out of this data
+    public Player[] getPlayerArray(int numOfPlayersOnTeam) {
         String[] playerStringArray = getPlayerStringArray();
         Player[] toReturn = new Player[playerStringArray.length/3];
+        if (toReturn.length < numOfPlayersOnTeam) {
+            System.out.println("Fatal error: there are not enough players in the file to create a team");
+            System.exit(1);
+        }
         for (int i = 0; i < toReturn.length; i++) {
             toReturn[i] = new Player(playerStringArray[i*3], Double.parseDouble(playerStringArray[i*3+1]), Integer.parseInt(playerStringArray[i*3+2]));
         }
