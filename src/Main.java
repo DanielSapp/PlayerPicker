@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
@@ -6,9 +7,24 @@ public class Main {
         int maxCost = ui.getMaxCost();
         int numOfPlayersOnTeam = ui.getNumOfPlayersOnTeam();
         int numOfThreads = ui.getNumberOfThreads();
-        PlayerDatabase pdb = new PlayerDatabase(ui.getPlayerArray(numOfPlayersOnTeam));
+        PlayerDatabase pdb = new PlayerDatabase();
+
+        //Prompt the user for the filename that contains the data to initialize pdb with, then attempt
+        //initialization.  Loop until initialization has successfully completed
+        while (true) {
+            try {
+                String fileName = ui.getFileName();
+                pdb.initialize(fileName, numOfPlayersOnTeam);
+                break;
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+            }
+        }
+
+        //Remove Players from the database that could not be on the optimal team
         pdb.cleanPlayerData(numOfPlayersOnTeam);
 
+        //Determine and print the best team
         System.out.println("The best combination of players is:");
         for (Player p : getBestCombination(pdb, maxCost, numOfPlayersOnTeam, numOfThreads)) {
             System.out.println(p.name);
