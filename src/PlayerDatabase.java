@@ -3,6 +3,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+//A class that represents the list of Players to be chosen from.  Ensures the Player[] cannot be altered and
+//has a method to remove players that couldn't be possible options on the optimal team.
 public class PlayerDatabase {
     private Player[] database;
     public PlayerDatabase(Player[] database) {
