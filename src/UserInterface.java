@@ -1,7 +1,3 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 //A class that abstracts away all command-line user interaction.  Each method prompts the user
