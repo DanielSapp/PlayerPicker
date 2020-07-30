@@ -21,9 +21,6 @@ public class Main {
             }
         }
 
-        //Remove Players from the database that could not be on the optimal team
-        pdb.cleanPlayerData(numOfPlayersOnTeam);
-
         //Determine and print the best team
         System.out.println("The best combination of players is:");
         for (Player p : getBestCombination(pdb, maxCost, numOfPlayersOnTeam, numOfThreads)) {

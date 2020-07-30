@@ -25,11 +25,12 @@ public class PlayerDatabase {
 
     public void initialize(String fileName, int numOfPlayersOnTeam) throws FileNotFoundException {
         database = getPlayerArray(fileName, numOfPlayersOnTeam);
+        cleanPlayerData(numOfPlayersOnTeam);
     }
 
     //Group players according to their cost, then remove the groupSize-numOfPlayersOnTeam lowest scoring players
     //for each group.  Reduces runtime significantly when many players have the same cost.
-    public void cleanPlayerData(int numOfPlayersOnTeam) {
+    private void cleanPlayerData(int numOfPlayersOnTeam) {
         HashMap<Integer, ArrayList<Player>> map = new HashMap<>();
         LinkedList<Player> newData = new LinkedList<>();
         for (Player p : database) {
@@ -50,7 +51,7 @@ public class PlayerDatabase {
 
     //Call getPlayerStringArray() to get a String[] representing the data in the CSV file.
     //Exit if there are fewer players than the declared team size. Return a Player[] created out of this data
-    public Player[] getPlayerArray(String fileName, int numOfPlayersOnTeam) throws FileNotFoundException {
+    private Player[] getPlayerArray(String fileName, int numOfPlayersOnTeam) throws FileNotFoundException {
         String[] playerStringArray = getPlayerStringArray(fileName);
         Player[] toReturn = new Player[playerStringArray.length];
         if (toReturn.length < numOfPlayersOnTeam) {
