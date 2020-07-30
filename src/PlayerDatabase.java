@@ -22,6 +22,7 @@ public class PlayerDatabase {
     public int size() {
         return database.length;
     }
+
     public void initialize(String fileName, int numOfPlayersOnTeam) throws FileNotFoundException {
         database = getPlayerArray(fileName, numOfPlayersOnTeam);
     }
@@ -51,19 +52,21 @@ public class PlayerDatabase {
     //Exit if there are fewer players than the declared team size. Return a Player[] created out of this data
     public Player[] getPlayerArray(String fileName, int numOfPlayersOnTeam) throws FileNotFoundException {
         String[] playerStringArray = getPlayerStringArray(fileName);
-        Player[] toReturn = new Player[playerStringArray.length/3];
+        Player[] toReturn = new Player[playerStringArray.length];
         if (toReturn.length < numOfPlayersOnTeam) {
             System.out.println("Fatal error: there are not enough players in the file to create a team");
             System.exit(1);
         }
         for (int i = 0; i < toReturn.length; i++) {
-            toReturn[i] = new Player(playerStringArray[i*3], Double.parseDouble(playerStringArray[i*3+1]), Integer.parseInt(playerStringArray[i*3+2]));
+            String[] playerAsString = playerStringArray[i].split(",");
+            toReturn[i] = new Player(playerAsString[0], Double.parseDouble(playerAsString[1]), Integer.parseInt(playerAsString[2]));
         }
         return toReturn;
     }
 
     //Prompt the user for a CSV file using getFileName().  Return a String[] representing the values in the file once
     //a valid file has been read.  Exit if an IOException caused by anything besides a invalid file location is thrown.
+    //Throws FileNotFoundException, which is passed back up to Main where it is handled.
     private String[] getPlayerStringArray(String fileName) throws FileNotFoundException {
         StringBuilder sb;
         sb = new StringBuilder();
@@ -79,6 +82,6 @@ public class PlayerDatabase {
             System.out.println("IOException");
             System.exit(-1);
         }
-        return sb.toString().split(",");
+        return sb.toString().split("\r?\n");
     }
 }
